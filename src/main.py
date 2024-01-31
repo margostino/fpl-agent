@@ -14,8 +14,8 @@ def generate_response(input_query: str, agent_executor: AgentExecutor):
 
 
 def main():
-    st.set_page_config(page_title="🦜🔗 Ask about Fantasy PL")
-    st.title("🦜🔗 Ask about Fantasy PL")
+    st.set_page_config(page_title="⚽️ FPL Agent")
+    st.title("⚽️ Ask about Fantasy PL")
 
     question_list = [
         "Which team was the best team in Gameweek 1?",
