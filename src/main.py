@@ -25,17 +25,17 @@ def main():
     query_text = st.selectbox("Select an example query:", question_list)
     openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
-    agent = FplAgent(model="gpt-4-0125-preview", openai_api_key=openai_api_key)
-
     if query_text == "Other":
         query_text = st.text_input(
             "Enter your query:",
             placeholder="Enter query here ...",
         )
+
     if not openai_api_key.startswith("sk-"):
         st.warning("Please enter your OpenAI API key!", icon="⚠")
     if openai_api_key.startswith("sk-"):
         st.header("Output")
+        agent = FplAgent(model="gpt-4-0125-preview", openai_api_key=openai_api_key)
         generate_response(query_text, agent.executor)
 
 
