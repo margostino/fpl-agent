@@ -23,11 +23,9 @@ def main():
         "Other",
     ]
     query_text = st.selectbox("Select an example query:", question_list)
-    openai_api_key = st.text_input(
-        "OpenAI API Key", type="password", disabled=not (query_text)
-    )
+    openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
-    agent = FplAgent(model="gpt-4-0125-preview")
+    agent = FplAgent(model="gpt-4-0125-preview", openai_api_key=openai_api_key)
 
     if query_text == "Other":
         query_text = st.text_input(
