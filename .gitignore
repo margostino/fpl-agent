@@ -183,3 +183,6 @@ exports/
 
 src/__pycache__/
 .vscode/
+
+# Streamlit
+.streamlit/
