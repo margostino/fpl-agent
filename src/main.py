@@ -8,7 +8,7 @@ from agent import FplAgent
 def generate_response(input_query: str, agent_executor: AgentExecutor):
     st_callback = StreamlitCallbackHandler(st.container())
     response = agent_executor.invoke(
-        {"input": input_query, "chat_history": []}, callbacks=[st_callback]
+        {"input": input_query, "chat_history": []}, config={"callbacks": [st_callback]}
     )
     return st.success(response["output"])
 
