@@ -185,4 +185,4 @@ src/__pycache__/
 .vscode/
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
