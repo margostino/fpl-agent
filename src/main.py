@@ -21,7 +21,7 @@ def generate_response(input_query: str, agent_executor: AgentExecutor):
 
 def main():
     st.set_page_config(page_title="⚽️ FPL Agent")
-    st.title("⚽️ Ask about Fantasy PL")
+    st.title("⚽️ 🏆 You'll never walk alone!")
 
     openai_api_key = st.sidebar.text_input(
         "OpenAI API Key",
@@ -43,6 +43,7 @@ def main():
         st.warning("Please enter your OpenAI API key!", icon="⚠")
 
     question_list = [
+        "",
         "Which team was the best team in Gameweek 1?",
         "How many goals have been scored in Gameweek 1?",
         "Other",
@@ -55,7 +56,7 @@ def main():
             placeholder="Enter query here ...",
         )
 
-    if has_valid_anfield_api_key and has_valid_openai_api_key:
+    if has_valid_anfield_api_key and has_valid_openai_api_key and query_text != "":
         st.header("Output")
         config.anfield_api_key = anfield_api_key
         config.openai_api_key = openai_api_key

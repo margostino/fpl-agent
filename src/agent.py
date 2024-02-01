@@ -6,7 +6,9 @@ from langchain_openai import ChatOpenAI
 
 from config import config
 from prompt import FPL_AGENT_PROMPT
-from tools import get_gameweek_by_id
+from tools.events import get_gameweek_by_id
+from tools.players import get_player_by_web_name, get_players_by_team_shortname
+from tools.teams import get_all_teams, get_team_by_short_name
 
 
 class FplAgent:
@@ -25,7 +27,13 @@ class FplAgent:
                     temperature=0,
                     openai_api_key=config.openai_api_key,
                 )
-                tools = [get_gameweek_by_id]
+                tools = [
+                    get_gameweek_by_id,
+                    get_players_by_team_shortname,
+                    get_player_by_web_name,
+                    get_team_by_short_name,
+                    get_all_teams,
+                ]
                 agent = create_openai_tools_agent(llm, tools, prompt=FPL_AGENT_PROMPT)
 
                 cls._instance.executor = AgentExecutor(
