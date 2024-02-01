@@ -1,4 +1,14 @@
-# import streamlit as st
+from pydantic import BaseModel
 
-openai_api_key: str
-anfield_api_key: str
+
+class Config(BaseModel):
+    openai_api_key: str = None
+    anfield_api_key: str = None
+
+    def __init__(self, openai_api_key: str = None, anfield_api_key: str = None, **data):
+        super().__init__(**data)
+        self.openai_api_key = openai_api_key
+        self.anfield_api_key = anfield_api_key
+
+
+config = Config()

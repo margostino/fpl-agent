@@ -1,8 +1,10 @@
+import os
+
 import requests
 from langchain.tools import tool
 from pydantic import BaseModel, Field
 
-from src import config
+from config import config
 
 GRAPHQL_ENDPOINT = "https://anfield-api-margostino.vercel.app/api/query"
 EVENTS_QUERY = """

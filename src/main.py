@@ -1,40 +1,40 @@
-import os
-
 import streamlit as st
-from dotenv import load_dotenv
 from langchain.agents import AgentExecutor
 from langchain_community.callbacks import StreamlitCallbackHandler
 
-from src import agent, config
+from agent import FplAgent
+from config import config
 
 
 def generate_response(input_query: str, agent_executor: AgentExecutor):
     st_callback = StreamlitCallbackHandler(st.container())
-    response = agent_executor.invoke(
-        {"input": input_query, "chat_history": []}, config={"callbacks": [st_callback]}
-    )
-    return st.success(response["output"])
+    try:
+        response = agent_executor.invoke(
+            {"input": input_query, "chat_history": []},
+            config={"callbacks": [st_callback]},
+        )
+        return st.success(response["output"])
+    except Exception as e:
+        print(f"Agent failed: {e}")
+        return st.success("There was an error processing your query. Please try again.")
 
 
 def main():
-    load_dotenv()
-
     st.set_page_config(page_title="⚽️ FPL Agent")
     st.title("⚽️ Ask about Fantasy PL")
 
-    config.openai_api_key = st.sidebar.text_input(
-        "OpenAI API Key", type="password", value=st.secrets.api_key.openai
+    openai_api_key = st.sidebar.text_input(
+        "OpenAI API Key",
+        type="password",
+        value=st.secrets.api_key.openai,
     )
-    config.anfield_api_key = st.sidebar.text_input(
+
+    anfield_api_key = st.sidebar.text_input(
         "Anfield API Key", type="password", value=st.secrets.api_key.anfield
     )
 
-    has_valid_anfield_api_key = (
-        config.anfield_api_key and config.anfield_api_key.startswith("ak-")
-    )
-    has_valid_openai_api_key = (
-        config.openai_api_key and config.openai_api_key.startswith("sk-")
-    )
+    has_valid_anfield_api_key = anfield_api_key and anfield_api_key.startswith("ak-")
+    has_valid_openai_api_key = openai_api_key and openai_api_key.startswith("sk-")
 
     if not has_valid_anfield_api_key:
         st.warning("Please enter your Anfield API key!", icon="⚠")
@@ -57,7 +57,9 @@ def main():
 
     if has_valid_anfield_api_key and has_valid_openai_api_key:
         st.header("Output")
-        fpl_agent = agent.FplAgent(model="gpt-4-0125-preview")
+        config.anfield_api_key = anfield_api_key
+        config.openai_api_key = openai_api_key
+        fpl_agent = FplAgent()
         generate_response(query_text, fpl_agent.executor)
 
 
