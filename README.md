@@ -19,6 +19,8 @@ Utilize advanced reasoning to make better predictions about player performances.
 
 Streamlined prompts and Streamlit components for an intuitive and efficient user interface.
 
+[](./assets/demo.png)
+
 ## Usage
 
 The app is live here: [FPL Agent on Streamlit](https://fpl-agent.streamlit.app/):
