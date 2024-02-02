@@ -45,6 +45,7 @@ def get_team_by_short_name(short_name: str) -> dict:
     """
     Get information about specific Team for a given team short name (e.g. shortname for Liverpool is LIV).
     This returns a single team information for the given Team Short Name.
+    If you need information about Players for a given Team, you can use the players tool and get stats for the players of this team.
     """
     print(f"Fetching information about Team {short_name}")
     variables = {"shortName": short_name}

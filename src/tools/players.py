@@ -146,7 +146,9 @@ class TeamShortName(BaseModel):
 
 
 class WebName(BaseModel):
-    web_name: str = Field(description="should be the web name of the player")
+    web_name: str = Field(
+        description="should be the web name of the player. Example: Haaland"
+    )
 
 
 @tool("team-players-tool", args_schema=TeamShortName)
@@ -156,7 +158,7 @@ def get_players_by_team_shortname(team_short_name: str) -> list[dict]:
     This returns all players under the given Team Short Name.
     It is important to note that if the Team Short Name is "*" then all players for all teams will be returned.
     The teams information is found in the Team GraphQL query.
-    You should consider the "news" field to see if the player is injured or not or if he is not longer playing in Premier League.
+    The field "chanceOfPlayingNextRound" indicate the prediction to play the next game and together with the "news" field you can see if the player is injured or not.
     """
     print(f"Fetching information about Player in Team {team_short_name}")
     variables = {"teamShortName": team_short_name}
@@ -181,7 +183,7 @@ def get_player_by_web_name(web_name: str) -> dict:
     """
     Get information about a single player for a given Web Name (e.g. Haaland).
     This returns a single player information.
-    You should consider the "news" field to see if the player is injured or not or if he is not longer playing in Premier League.
+    The field "chanceOfPlayingNextRound" indicate the prediction to play the next game and together with the "news" field you can see if the player is injured or not.
     """
     print(f"Fetching information about Player {web_name}")
     variables = {"webName": web_name}

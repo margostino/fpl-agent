@@ -8,22 +8,22 @@ from config import config
 QUERY = """
 query HeadToHead($teamAShortName: String!, $teamHShortName: String!) {
 	h2h(teamAShortName: $teamAShortName, teamHShortName: $teamHShortName) {
-		Gameweeks {
-			TeamAName
-			ScoreTeamA
-			TeamHName
-			ScoreTeamH
-			Kickoff
+		gameweeks {
+			kickoff
+			teamAName
+			scoreTeamA
+			teamHName
+			scoreTeamH
 		}
-		StatsTeamA {
-			Name
-			Value
-			Description
+		statsTeamA {
+			name
+			value
+			description
 		}
-		StatsTeamH {
-			Name
-			Value
-			Description
+		statsTeamH {
+			name
+			value
+			description
 		}
 	}
 }
@@ -42,8 +42,8 @@ class H2h(BaseModel):
 @tool("head-to-head-tool", args_schema=H2h)
 def get_h2h_by_short_names(team_a_short_name: str, team_h_short_name: str) -> dict:
     """
-    Get information about specific Team for a given team short name (e.g. shortname for Liverpool is LIV).
-    This returns a single team information for the given Team Short Name.
+    Get information about the Head to Head between Team Home and Team Away.
+    This returns information and stats about previous games between both teams.
     """
     print(
         f"Fetching information about the H2H between {team_h_short_name} and {team_a_short_name}"
